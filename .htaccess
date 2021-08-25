@@ -1,0 +1,131 @@
+
+
+# Ideal & Simple .htaccess File For WordPress Security crafted by nerds.
+# Simply Copy-Paste & Replace default .htaccess file or 
+# Upload directly into WP installation or via FTP.
+# @Author_Name: Kapil Gupta
+
+
+
+
+# Some Code To Hide Important WordPress and Server Files.____
+
+<FilesMatch "^.*(error_log|wp-config\.php|php.ini|\.[hH][tT][aApP].*)$">
+Order deny,allow
+Deny from all
+</FilesMatch>
+
+#Code To Disable Index Browsing.____
+Options All -Indexes
+
+# Force from HTTP to HTTPS - I suggest to use https for better security_____
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+
+
+# Prevent Your Website From Scripts Injections_____ 
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|[|%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|[|%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php [F,L]
+
+
+
+
+# Block WordPress files from outside access_____
+
+# Hide access to the readme.html
+<files readme.html>
+ Order Allow,Deny
+ Deny from all
+ Satisfy all
+</Files>
+
+# Hide access to the readme.txt
+<files readme.txt>
+  Order allow,deny
+  Deny from all
+</files>
+
+# Hide access to the install.php
+<files install.php>
+  Order allow,deny
+  Deny from all
+</files>
+
+# Hide access to the debug.log
+<Files debug.log>
+  Order allow,deny
+  Deny from all
+</Files>
+
+# Hide access to the wp-config.php 
+<files wp-config.php>
+Order allow,deny
+Deny from all
+</files>
+ 
+# Say No To error log access 
+<files error_log>
+Order allow,deny
+Deny from all
+</files>
+
+#Say No access to the .htaccess und .htpasswd
+<FilesMatch "(\.htaccess|\.htpasswd)">
+  Order deny,allow
+  Deny from all
+</FilesMatch>
+
+
+# Hide & Protect WP Includes Directory 
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^wp-admin/includes/ - [F,L]
+RewriteRule !^wp-includes/ - [S=3]
+RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
+RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+RewriteRule ^wp-includes/theme-compat/ - [F,L]
+</IfModule>
+
+# Prevent Username Enumeration
+RewriteCond %{QUERY_STRING} author=d
+RewriteRule ^ /? [L,R=301]
+
+
+# To Prevent Execution Of PHP In Upload Folder
+<Directory "UPLOADS-PATH/var/www/wp-content/uploads/">
+<Files "*.php">
+Order Deny,Allow
+Deny from All
+</Files>
+
+# WordPress Security Headers 
+<ifModule mod_headers.c>
+Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Content-Type-Options nosniff
+Header set X-Frame-Options DENY
+Header set Referrer-Policy: no-referrer-when-downgrade
+</ifModule>
+
+
+# Do Not Change This. Default WordPress Htaccess file.
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
