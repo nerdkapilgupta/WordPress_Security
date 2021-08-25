@@ -15,7 +15,7 @@ Order deny,allow
 Deny from all
 </FilesMatch>
 
-#Code To Disable Index Browsing.____
+#Code To Disable Index Browsing or Disable Directory Browsing____
 Options All -Indexes
 
 # Force from HTTP to HTTPS - I suggest to use https for better security_____
