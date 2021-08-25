@@ -1,12 +1,7 @@
-
-
 # Ideal & Simple .htaccess File For WordPress Security crafted by nerds.
 # Simply Copy-Paste & Replace default .htaccess file or 
 # Upload directly into WP installation or via FTP.
 # @Author_Name: Kapil Gupta
-
-
-
 
 # Some Code To Hide Important WordPress and Server Files.____
 
@@ -26,8 +21,6 @@ RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-
-
 # Prevent Your Website From Scripts Injections_____ 
 Options +FollowSymLinks
 RewriteEngine On
@@ -36,11 +29,7 @@ RewriteCond %{QUERY_STRING} GLOBALS(=|[|%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|[|%[0-9A-Z]{0,2})
 RewriteRule ^(.*)$ index.php [F,L]
 
-
-
-
 # Block WordPress files from outside access_____
-
 # Hide access to the readme.html
 <files readme.html>
  Order Allow,Deny
@@ -84,7 +73,6 @@ Deny from all
   Deny from all
 </FilesMatch>
 
-
 # Hide & Protect WP Includes Directory 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -99,7 +87,6 @@ RewriteRule ^wp-includes/theme-compat/ - [F,L]
 # Prevent Username Enumeration
 RewriteCond %{QUERY_STRING} author=d
 RewriteRule ^ /? [L,R=301]
-
 
 # To Prevent Execution Of PHP In Upload Folder
 <Directory "UPLOADS-PATH/var/www/wp-content/uploads/">
@@ -116,7 +103,6 @@ Header set X-Content-Type-Options nosniff
 Header set X-Frame-Options DENY
 Header set Referrer-Policy: no-referrer-when-downgrade
 </ifModule>
-
 
 # Do Not Change This. Default WordPress Htaccess file.
 # BEGIN WordPress
