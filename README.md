@@ -1,4 +1,4 @@
-# WordPress_Security
+# WordPress_Security - Best .htaccess Snippets to Improve WordPress Security
 Contains simple tweaks and tips to secure the WordPress websites
 Protect WordPress sites with .htaccess
 WordPress is the most beloved CMS on the planet with more than 70 million users, using it for all kinds of sites, from personal blogs to e-commerce stores.
